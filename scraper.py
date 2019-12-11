@@ -1,4 +1,4 @@
-import requests, json
+import requests, json, os
 from math import floor
 from time import time
 
@@ -17,7 +17,6 @@ def getScore(score):
 
 def getTime(timeScore):
 	divider = ""
-
 	if timeScore < 60:
 		divider = [timeScore, 1, "s"]
 	elif timeScore < 3600:
@@ -30,15 +29,16 @@ def getTime(timeScore):
 
 	return str(round(timeScore/divider[0], 1))+divider[1]
 
+if not os.path.exists("Outputs"):
+	os.makedirs("Outputs")
+
 for question in data:
 	question = question["data"]
-	file = open(question["id"]+".txt","w+")
 	questionData = {}
 
 	print("ID: ["+question["id"]+"]")
 	print("Asked by u/"+question["author"]+",")
 	print(question["title"])
-	print(question.keys())
 
 	questionData["title"] = question["title"]
 
@@ -72,6 +72,6 @@ for question in data:
 	print("Completed, moving on\n")
 
 	#print(json.dumps(questionData))
+	file = open("Outputs/"+question["id"]+".json","w+")
 	file.write(json.dumps(questionData))
 	file.close()
-	break
