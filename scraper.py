@@ -20,14 +20,15 @@ def getTime(timeScore):
 	if timeScore < 60:
 		divider = [timeScore, 1, "s"]
 	elif timeScore < 3600:
-		divider = [60, "m"]
+		divider = [60, "minute"]
 	elif timeScore < 86400:
-		divider = [3600, "h"]
+		divider = [3600, "hour"]
 	elif timeScore < 31536000:
-		divider = [86400, "d"]
-	else: divider = [31536000, "y"]
+		divider = [86400, "day"]
+	else: divider = [31536000, "year"]
 
-	return str(round(timeScore/divider[0], 1))+divider[1]
+
+	return str(int(round(timeScore/divider[0], 0)))+" "+divider[1]+("s" if not round(timeScore/divider[0], 0) == 1 else "")
 
 if not os.path.exists("Outputs"):
 	os.makedirs("Outputs")
