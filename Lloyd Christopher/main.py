@@ -80,7 +80,7 @@ for answer in data:
     if answer["author"] == "AutoModerator": continue
     try:
       fdata.write("u/"+answer["author"] + "||" + getscore(answer["score"]) + " points||")
-      fdata.write( answer["body"] + "/////\n")
+      fdata.write( answer["body"] + "/////")
     except:
       print("Error Occurred while writing in script.txt, skipping body..\n")
       continue
@@ -99,10 +99,10 @@ print("--- %s seconds ---" % round(time() - start_time, 2))
 print("Starting TTS Generation...")
 start_time = time()
 f = open("scripttts.txt")
-ttstext = f.read()
-ttsobj = gTTS(ttstext,lang="en", slow=False)
+#ttstext = f.read()
+#ttsobj = gTTS(ttstext,lang="en", slow=False)
 
-ttsobj.save("script.wav")
+#ttsobj.save("script.wav")
 f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
@@ -122,6 +122,19 @@ for thing in splitscript.split("/////"):
 f.close()
  
 print("Splitting script finished at:")
+print("--- %s seconds ---" % round(time() - start_time, 2))
+
+start_time = time()
+
+splitscript = open("script.txt").read()
+f = open("p5auto.txt","w+")
+for thing in splitscript.split("/////"):
+  print(thing.split("||")[0])
+
+
+f.close()
+
+print("P5 screenshot prep and snap finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
 print("\n\nTotal finished at:")
