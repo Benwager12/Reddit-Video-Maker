@@ -1,8 +1,4 @@
-﻿'''
-Notes:
-Change gender of tts
-Fix 
-'''
+﻿#-----Lloyd 2019-----
 
 import requests, json
 from random import randint
@@ -115,13 +111,21 @@ f = open("scripttts.txt")
 #ttsobj = gTTS(ttstext,lang="en", slow=False)
 
 #ttsobj.save("script.wav")
-
+f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
 start_time = time()
 
-splitscript = open("script.txt")
+splitscript = open("script.txt").read()
+f = open("p5auto.txt","w+")
+for thing in splitscript.split("/////"):
+  for split in thing.split("||"):
+    try:
+      f.write(split + "\n")
+    except:
+        #skip invaild text
+      continue
 
 #for line in splitscript:
 #  try:
@@ -134,6 +138,8 @@ splitscript = open("script.txt")
 #        print(line1[2])
 #    #print(field1 + " " + field2 + " " + field3)
 #  except: continue
+
+f.close()
  
 print("Splitting script finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
