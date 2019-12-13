@@ -58,9 +58,6 @@ print("\nFound random URL. Getting json from said url.\n")
 fdata.write(randcomquestion[genint] + "\n\n")
 fdata2.write(randcomquestion[genint]+ "\n\n")
 
-#nameofselectedpost = selectedurl.split("/")[7].replace("_"," ")
-#print(nameofselectedpost)
-
 #Stage 2
 print("\n---Starting Stage 2---\n")
 
@@ -70,11 +67,6 @@ print("Delcaring and setting important vars\n")
 req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
 
 data = json.loads(req1)[1]["data"]["children"]
-
-#fdata = open("data.txt","w+")
-#fdata.write(req1)
-#fdata.close()
-
 
 print("Building answer data file...\n")
 i = 0
@@ -107,10 +99,10 @@ print("--- %s seconds ---" % round(time() - start_time, 2))
 print("Starting TTS Generation...")
 start_time = time()
 f = open("scripttts.txt")
-#ttstext = f.read()
-#ttsobj = gTTS(ttstext,lang="en", slow=False)
+ttstext = f.read()
+ttsobj = gTTS(ttstext,lang="en", slow=False)
 
-#ttsobj.save("script.wav")
+ttsobj.save("script.wav")
 f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
@@ -126,18 +118,6 @@ for thing in splitscript.split("/////"):
     except:
         #skip invaild text
       continue
-
-#for line in splitscript:
-#  try:
-#    fields = line.split("/////")
-#    for field in fields:
-#      fields = field.split("||")
-#      for line1 in fields:
-#        print(line1[0])
-#        print(line1[1])
-#        print(line1[2])
-#    #print(field1 + " " + field2 + " " + field3)
-#  except: continue
 
 f.close()
  
