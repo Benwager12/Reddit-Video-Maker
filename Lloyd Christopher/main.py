@@ -17,7 +17,7 @@ def getscore(score):
 print("Declaring, setting and checking important vars\n")
 
 #This is how far the script goes into comments before stopping
-depthlimit = 15
+depthlimit = 25
 randcom = []
 randcomquestion = []
 selectedurl = ""
@@ -107,35 +107,24 @@ f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
-start_time = time()
+#start_time = time()
 
-splitscript = open("script.txt").read()
-f = open("p5auto.txt","w+")
-for thing in splitscript.split("/////"):
-  for split in thing.split("||"):
-    try:
-      f.write(split + "\n")
-    except:
-        #skip invaild text
-      continue
-
-f.close()
- 
-print("Splitting script finished at:")
-print("--- %s seconds ---" % round(time() - start_time, 2))
-
-start_time = time()
-
-splitscript = open("script.txt").read()
-f = open("p5auto.txt","w+")
-for thing in splitscript.split("/////"):
-  print(thing.split("||")[0])
+#splitscript = open("script.txt").read()
+#for thing in splitscript.split("/////"):
+#  try:
+#    print(thing.split("||")[0])
+#    fmod = open("sketch.js","w+")
+#    for line in fmod:
+#      fmod.write(line.replace('author = "replaceme1author"', 'author = "' + thing.split("||"[0] + '"')))
+#      fmod.write(line.replace('author = "' + thing.split("||"[0] + '"', 'author = "replaceme1author"')))
+#    continue
+#  except:
+#    continue
+#fck it, using vb instead
 
 
-f.close()
-
-print("P5 screenshot prep and snap finished at:")
-print("--- %s seconds ---" % round(time() - start_time, 2))
+#print("P5 screenshot prep finished at:")
+#print("--- %s seconds ---" % round(time() - start_time, 2))
 
 print("\n\nTotal finished at:")
 print("--- %s seconds ---" % round(time() - total_time, 2))
