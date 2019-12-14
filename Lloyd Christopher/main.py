@@ -107,9 +107,18 @@ f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
-#start_time = time()
+#Gets all parts of the script like author, score and author
 
-#splitscript = open("script.txt").read()
+start_time = time()
+partnumber = 0
+parts = ["author","score","comment"]
+splitscript = open("script.txt").read()
+for question in splitscript.split("/////"):
+  for part in question.split("||"):
+    if partnumber > 2:
+      partnumber = 0
+    print(part + " " + parts[partnumber])
+    partnumber = partnumber + 1
 #for thing in splitscript.split("/////"):
 #  try:
 #    print(thing.split("||")[0])
@@ -120,11 +129,10 @@ print("--- %s seconds ---" % round(time() - start_time, 2))
 #    continue
 #  except:
 #    continue
-#fck it, using vb instead
 
 
-#print("P5 screenshot prep finished at:")
-#print("--- %s seconds ---" % round(time() - start_time, 2))
+print("P5 screenshot prep finished at:")
+print("--- %s seconds ---" % round(time() - start_time, 2))
 
 print("\n\nTotal finished at:")
 print("--- %s seconds ---" % round(time() - total_time, 2))
