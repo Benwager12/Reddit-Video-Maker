@@ -18,6 +18,7 @@ print("Declaring, setting and checking important vars\n")
 
 #This is how far the script goes into comments before stopping
 depthlimit = 25
+
 randcom = []
 randcomquestion = []
 selectedurl = ""
@@ -99,26 +100,63 @@ print("--- %s seconds ---" % round(time() - start_time, 2))
 print("Starting TTS Generation...")
 start_time = time()
 f = open("scripttts.txt")
-#ttstext = f.read()
-#ttsobj = gTTS(ttstext,lang="en", slow=False)
+ttstext = f.read()
+ttsobj = gTTS(ttstext,lang="en", slow=False)
 
-#ttsobj.save("script.wav")
+ttsobj.save("script.wav")
 f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
+#Somewhat working script, unable to take screenshots of website
+#without driver for chrome
+#Doing it in VB instead
+
 #Gets all parts of the script like author, score and author
 
-start_time = time()
-partnumber = 0
-parts = ["author","score","comment"]
-splitscript = open("script.txt").read()
-for question in splitscript.split("/////"):
-  for part in question.split("||"):
-    if partnumber > 2:
-      partnumber = 0
-    print(part + " " + parts[partnumber])
-    partnumber = partnumber + 1
+#start_time = time()
+#partnumber = 0
+#parts = ["author","score","comment"]
+#authorscorecomments = []
+#splitscript = open("script.txt").read()
+
+
+#try:
+
+#  i2 = 0
+#  screenshotnumber = 0
+#  for question in splitscript.split("/////"):
+#    if i2 == 0:
+#      i2 = i2 + 1
+#      continue
+#    for part in question.split("||"):
+#      if partnumber > 2:
+#        partnumber = 0
+#      #print(part + " " + parts[partnumber])
+#      authorscorecomments.append(part)
+#      partnumber = partnumber + 1
+#    #print(authorscorecomments)
+#    if '"' in authorscorecomments[2]:
+#      continue
+#    fin = open("sketch.js","rt")
+#    data1 = fin.read()
+#    data1 = data1.replace("replaceme1author",authorscorecomments[0])
+#    data1 = data1.replace("replaceme2score",authorscorecomments[1])
+#    data1 = data1.replace("replaceme3comment",authorscorecomments[2])#
+#
+
+#    data1 = data1.replace(authorscorecomments[0],"replaceme1author")
+#    data1 = data1.replace(authorscorecomments[1],"replaceme2score")
+#    data1 = data1.replace(authorscorecomments[2],"replaceme3comment")
+#    fin.close()
+
+#    fin = open("sketch.js","wt")
+#    fin.write(data1)
+#    fin.close()
+#    screenshotnumber = screenshotnumber + 1
+#    authorscorecomments = []
+#except:
+#  print("Exception Occurred, probably normal. Continuing")
 #for thing in splitscript.split("/////"):
 #  try:
 #    print(thing.split("||")[0])
@@ -131,8 +169,8 @@ for question in splitscript.split("/////"):
 #    continue
 
 
-print("P5 screenshot prep finished at:")
-print("--- %s seconds ---" % round(time() - start_time, 2))
+#print("P5 screenshot prep finished at:")
+#print("--- %s seconds ---" % round(time() - start_time, 2))
 
 print("\n\nTotal finished at:")
 print("--- %s seconds ---" % round(time() - total_time, 2))
