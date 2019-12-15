@@ -1,11 +1,28 @@
 ﻿#-----Lloyd 2019-----
 
+#IT WORKS! I THINK
+
 import requests, json, os, sys
 from random import randint
-from time import time
+from time import time, sleep
 from gtts import gTTS
+from selenium import webdriver
 total_time = time()
 start_time = time()
+from selenium.webdriver.opera.options import Options
+
+#print("Init Opera Driver...")
+
+#WINDOW_SIZE = "0,0"
+options1 = Options()
+#options1.add_argument('--ignore-certificate-errors')
+#options1.add_argument("--test-type")
+#options1.add_argument('--headless')
+#options1.add_argument('--no-sandbox')
+#options1.add_argument("--window-size=%s" % WINDOW_SIZE)
+
+
+
 def getscore(score):
   if score > 1000:
     score /= 1000
@@ -143,9 +160,26 @@ try:
     data1 = data1.replace("replaceme2score",authorscorecomments[1])
     data1 = data1.replace("replaceme3comment",authorscorecomments[2])
 
-    #SCREENSHOT WEBSITE HERE
-    
+    fin.close()
 
+    fin = open("sketch.js","wt")
+    fin.write(data1)
+    fin.close()
+    
+    sleep(0.5)
+    #SCREENSHOT WEBSITE HERE
+    #print(screenshotnumber)
+    driver = webdriver.Opera(options=options1)
+    driver.get(os.path.dirname(sys.argv[0]) + "\\index.html")
+    sleep(0.5)
+    driver.save_screenshot("generated_screenshots\\screenshot"+str(screenshotnumber)+".png")
+
+    driver.quit()
+    print("Driver Screenshot completed: " + str(screenshotnumber))
+    sleep(5)
+    fin = open("sketch.js","rt")
+    data1 = fin.read()
+    
     data1 = data1.replace(authorscorecomments[0],"replaceme1author")
     data1 = data1.replace(authorscorecomments[1],"replaceme2score")
     data1 = data1.replace(authorscorecomments[2],"replaceme3comment")
@@ -156,9 +190,8 @@ try:
     fin.close()
     screenshotnumber = screenshotnumber + 1
     authorscorecomments = []
-except:
-  print("Exception Occurred, probably normal. Continuing")
-
+except Exception as e:
+  print("Exception Occurred, probably normal. Continuing: " + str(e))
 
 #print("P5 screenshot prep finished at:")
 #print("--- %s seconds ---" % round(time() - start_time, 2))
