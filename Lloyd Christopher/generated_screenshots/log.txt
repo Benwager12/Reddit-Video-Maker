@@ -1,0 +1,2 @@
+﻿Notes:
+add ability to support special chars in js without it stopping with an exception

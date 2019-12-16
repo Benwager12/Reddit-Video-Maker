@@ -38,7 +38,7 @@ function draw() {
   drawText(30, 30, [
     [author, [20, 141, 211]],
     ["  ", [0,0,0]],
-    [score + " points", [180]]
+    [score, [180]]
   ]);
   
   fill(255)

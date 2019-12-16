@@ -1,6 +1,6 @@
-author = "u/DeathSpiral321"
-score = "10.7k points"
-comment = "People not flushing in public restrooms. I've had enough of their shit."
+author = 'replaceme1author'
+score = 'replaceme2score'
+comment = 'replaceme3comment'
 
 function drawText( x, y, text_array ) {
   let positions = {"top": {"x":x,"y":y}, "bottom": {}};
@@ -38,7 +38,7 @@ function draw() {
   drawText(30, 30, [
     [author, [20, 141, 211]],
     ["  ", [0,0,0]],
-    [score + " points", [180]]
+    [score, [180]]
   ]);
   
   fill(255)
