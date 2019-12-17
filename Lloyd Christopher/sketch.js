@@ -1,6 +1,6 @@
-author = 'replaceme1author'
-score = 'replaceme2score'
-comment = 'replaceme3comment'
+author = "replaceme1author"
+score = "replaceme2score"
+comment = "replaceme3comment"
 
 function drawText( x, y, text_array ) {
   let positions = {"top": {"x":x,"y":y}, "bottom": {}};

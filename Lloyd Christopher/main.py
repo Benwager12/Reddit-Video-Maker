@@ -1,7 +1,8 @@
 ﻿#-----Lloyd 2019-----
 
 #NOTES:
-#Fix chars that break the website, like :
+#Fix chars that break the website, like : (Done sorta)
+#Fix bug where the html fixer breaks half way through
 
 import requests, json, os, sys, shutil
 from random import randint
@@ -164,8 +165,10 @@ try:
     #  continue
     fin = open("sketch.js","rt")
     data1 = fin.read()
+    
     data1 = data1.replace("replaceme1author",authorscorecomments[0])
     data1 = data1.replace("replaceme2score",authorscorecomments[1])
+    authorscorecomments[2] = authorscorecomments[2].replace("\\","\\\\").replace("\n","").replace("\"", "\\\"").replace("\'", "\\\'")
     data1 = data1.replace("replaceme3comment",authorscorecomments[2])
 
     fin.close()
@@ -181,7 +184,7 @@ try:
     driver.get(os.path.dirname(sys.argv[0]) + "\\index.html")
     sleep(0.4)
     driver.save_screenshot("generated_screenshots\\screenshot"+str(screenshotnumber)+".png")
-
+    #sleep(2)
     #driver.quit()
     print(authorscorecomments[0])
     print(authorscorecomments[1])
@@ -211,3 +214,5 @@ driver.quit()
 
 print("\n\nTotal finished at:")
 print("--- %s seconds ---" % round(time() - total_time, 2))
+
+print("\n\nProgram finished!")
