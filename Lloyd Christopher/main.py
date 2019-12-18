@@ -5,13 +5,14 @@
 #Fix bug where the html fixer breaks half way through
 
 import requests, json, os, sys, shutil
+from html import escape
 from random import randint
 from time import time, sleep
 from gtts import gTTS
 from selenium import webdriver
 total_time = time()
 start_time = time()
-from selenium.webdriver.opera.options import Options
+from selenium.webdriver.chrome.options import Options
 
 print("Reverting sketch.js...")
 shutil.copy('backup\sketch.js', 'sketch.js')
@@ -54,8 +55,9 @@ fdata2 = open("scripttts.txt","w+")
 
 #Load questions
 
-req = requests.get(link, headers={"User-agent":"rb0.1"}).text #gets body from link
-data = json.loads(req)["data"]["children"]
+# req = requests.get(link, headers={"User-agent":"rb0.1"}).text #gets body from link
+req = open("reddit.txt", "r").read()
+data = json.loads(req)[0]["data"]["children"]
 print("Building randcom array...\n")
 for question in data:
     question = question["data"]
@@ -63,8 +65,6 @@ for question in data:
     randcom.append("https://www.reddit.com" + question["permalink"]) #Get permalink, so we can access the json file
     randcomquestion.append(question["title"])
     #print(question["title"] + "\n")
-    
-    
 
 print(str(len(randcom)-1) + " total url's found in randcom array! - INFO\n")
 print("Selecting Random URL from randcom... - INFO\n")
@@ -87,9 +87,9 @@ print("Delcaring and setting important vars\n")
 #You have to get the question manually though!
 selectedurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_whats_a_thing_that_can_be_scary/.json"
 
-req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
+#req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
 
-data = json.loads(req1)[1]["data"]["children"]
+data = json.loads(req)[1]["data"]["children"]
 
 print("Building answer data file...\n")
 i = 0
@@ -144,7 +144,7 @@ splitscript = open("script.txt").read()
 
 
 try:
-  driver = webdriver.Opera(options=options1)
+  driver = webdriver.Chrome(options=options1)
   i2 = 0
   screenshotnumber = 0
   for question in splitscript.split("¬¬¬¬¬"):
@@ -165,11 +165,13 @@ try:
     #  continue
     fin = open("sketch.js","rt")
     data1 = fin.read()
+
     
-    data1 = data1.replace("replaceme1author",authorscorecomments[0])
-    data1 = data1.replace("replaceme2score",authorscorecomments[1])
-    authorscorecomments[2] = authorscorecomments[2].replace("\\","\\\\").replace("\n","").replace("\"", "\\\"").replace("\'", "\\\'")
-    data1 = data1.replace("replaceme3comment",authorscorecomments[2])
+    #data1 = data1.replace("replaceme1author",authorscorecomments[0])
+    #data1 = data1.replace("replaceme2score",authorscorecomments[1])
+    #authorscorecomments[2] = authorscorecomments[2].replace("\\","\\\\").replace("\n","").replace("\"", "\\\"").replace("\'", "\\\'")
+    #authorscorecomments[2] = escape(authorscorecomments[2])
+    #data1 = data1.replace("replaceme3comment",authorscorecomments[2])
 
     fin.close()
 
@@ -180,11 +182,14 @@ try:
     sleep(0.3)
     #SCREENSHOT WEBSITE HERE
     #print(screenshotnumber)
-
+    authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     driver.get(os.path.dirname(sys.argv[0]) + "\\index.html")
+    script = "author=\"" + authorscorecomments[0] + "\";score=\"" + authorscorecomments[1] + "\";comment=\"" + authorscorecomments[2] +"\";"
+    print(script)
+    driver.execute_script(script)
     sleep(0.4)
     driver.save_screenshot("generated_screenshots\\screenshot"+str(screenshotnumber)+".png")
-    #sleep(2)
+    sleep(5)
     #driver.quit()
     print(authorscorecomments[0])
     print(authorscorecomments[1])
