@@ -1,6 +1,7 @@
 import requests, json, os
 from math import floor
 from time import time
+from shutil import rmtree
 
 link = "https://www.reddit.com/r/askreddit.json"
 req = requests.get(link, headers={"User-agent":"RedBot 0.1"}).text
@@ -16,9 +17,9 @@ def getScore(score):
 	return str(score)
 
 def getTime(timeScore):
-	divider = ""
+	divider = []
 	if timeScore < 60:
-		divider = [timeScore, 1, "s"]
+		divider = [1, "second"]
 	elif timeScore < 3600:
 		divider = [60, "minute"]
 	elif timeScore < 86400:
@@ -30,8 +31,9 @@ def getTime(timeScore):
 
 	return str(int(round(timeScore/divider[0], 0)))+" "+divider[1]+("s" if not round(timeScore/divider[0], 0) == 1 else "")
 
-if not os.path.exists("Outputs"):
-	os.makedirs("Outputs")
+if os.path.exists("Outputs"):
+	rmtree("Outputs")
+os.makedirs("Outputs")
 
 for question in data:
 	question = question["data"]
@@ -42,6 +44,7 @@ for question in data:
 	print(question["title"])
 
 	questionData["title"] = question["title"]
+	questionData["id"] = question["id"]
 
 	print(getScore(question["score"]) + " points\n")
 	questionData["score"] = getScore(question["score"])
@@ -58,10 +61,10 @@ for question in data:
 
 	for comment in comments:
 		comment = comment["data"]
-		
 		try:
 			if comment.get("author") == None: continue
 			questionData["comments"].append({
+				"id": comment["id"],
 				"author": comment["author"],
 				"score": getScore(comment["score"]),
 				"created": getTime(start_time-comment["created_utc"]),
