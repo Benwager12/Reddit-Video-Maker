@@ -5,3 +5,8 @@ html, body {
 canvas {
   display: block;
 }
+<style type="text/css">
+    body {
+        overflow: hidden;
+    }
+</style>

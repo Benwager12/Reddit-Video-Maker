@@ -16,19 +16,15 @@ function drawText( x, y, text_array ) {
   }
 }
 
-
-
-index = 0
-currentComment = {}
-
 function setup() {
   lines = round(textWidth(comment)/500)+3;
   textSize(17);
-  createCanvas(750, 54+lines*24);
+  createCanvas(1200, 850);
   textFont("Verdana");
   textAlign(LEFT, TOP);
            
 }
+
 
 function draw() {
   //if (!a) {
@@ -42,15 +38,14 @@ function draw() {
   ]);
   
   fill(255)
-  
-  text(comment, 30, 53, width-(width/12), height-(height/4))
 
+  text(comment, 30, 53, width-(width/12), height-(height/4))
 }
 
 function calculateLines() {
   let startWidth = width/12
   let endWidth = width-(width/12)
-  let txtWidth = textWidth(currentComment.comment)
+  let txtWidth = textWidth(comment)
   let lines = txtWidth/(startWidth-endWidth);
   return Math.round(Math.abs(lines))+1
 }
@@ -58,5 +53,5 @@ function calculateLines() {
 function keyPressed() {
 
   console.log(calculateLines())
-  resizeCanvas(600, 33+calculateLines()*24+22);
+  
 }

@@ -1,8 +1,4 @@
-﻿#-----Lloyd 2019-----
-
-#NOTES:
-#Fix chars that break the website, like : (Done sorta)
-#Fix bug where the html fixer breaks half way through
+﻿#-----Lloyd 2019-----#
 
 import requests, json, os, sys, shutil
 from html import escape
@@ -17,13 +13,13 @@ from selenium.webdriver.chrome.options import Options
 print("Reverting sketch.js...")
 shutil.copy('backup\sketch.js', 'sketch.js')
 sleep(1)
-#WINDOW_SIZE = "0,0"
+WINDOW_SIZE = "1250,1020"
 options1 = Options()
 #options1.add_argument('--ignore-certificate-errors')
 #options1.add_argument("--test-type")
 #options1.add_argument('--headless')
 #options1.add_argument('--no-sandbox')
-#options1.add_argument("--window-size=%s" % WINDOW_SIZE)
+options1.add_argument("--window-size=%s" % WINDOW_SIZE)
 
 def getscore(score):
   if score > 1000:
@@ -163,8 +159,8 @@ try:
     #if '"' in authorscorecomments[2]:
     #  print("1")
     #  continue
-    fin = open("sketch.js","rt")
-    data1 = fin.read()
+    #fin = open("sketch.js","rt")
+    #data1 = fin.read()
 
     
     #data1 = data1.replace("replaceme1author",authorscorecomments[0])
@@ -173,39 +169,43 @@ try:
     #authorscorecomments[2] = escape(authorscorecomments[2])
     #data1 = data1.replace("replaceme3comment",authorscorecomments[2])
 
-    fin.close()
+    #fin.close()
 
-    fin = open("sketch.js","wt")
-    fin.write(data1)
-    fin.close()
+    #fin = open("sketch.js","wt")
+    #fin.write(data1)
+    #fin.close()
     
     sleep(0.3)
     #SCREENSHOT WEBSITE HERE
     #print(screenshotnumber)
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
+    authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
+    authorscorecomments[2] = authorscorecomments[2].replace("\n", "\\n")
+    authorscorecomments[2] = authorscorecomments[2].replace("\\\\\"", "\\\"")
+    
     driver.get(os.path.dirname(sys.argv[0]) + "\\index.html")
     script = "author=\"" + authorscorecomments[0] + "\";score=\"" + authorscorecomments[1] + "\";comment=\"" + authorscorecomments[2] +"\";"
     print(script)
     driver.execute_script(script)
     sleep(0.4)
     driver.save_screenshot("generated_screenshots\\screenshot"+str(screenshotnumber)+".png")
-    sleep(5)
+    #sleep(5)
     #driver.quit()
-    print(authorscorecomments[0])
-    print(authorscorecomments[1])
-    print(authorscorecomments[2])
+    #print(authorscorecomments[0])
+    #print(authorscorecomments[1])
+    #print(authorscorecomments[2])
     print("Driver Screenshot completed: " + str(screenshotnumber))
-    fin = open("sketch.js","rt")
-    data1 = fin.read()
+    #fin = open("sketch.js","rt")
+    #data1 = fin.read()
     
-    data1 = data1.replace(authorscorecomments[0],"replaceme1author")
-    data1 = data1.replace(authorscorecomments[1],"replaceme2score")
-    data1 = data1.replace(authorscorecomments[2],"replaceme3comment")
-    fin.close()
+    #data1 = data1.replace(authorscorecomments[0],"replaceme1author")
+    #data1 = data1.replace(authorscorecomments[1],"replaceme2score")
+    #data1 = data1.replace(authorscorecomments[2],"replaceme3comment")
+    #fin.close()
 
-    fin = open("sketch.js","wt")
-    fin.write(data1)
-    fin.close()
+    #fin = open("sketch.js","wt")
+    #fin.write(data1)
+    #fin.close()
     screenshotnumber = screenshotnumber + 1
     authorscorecomments = []
     

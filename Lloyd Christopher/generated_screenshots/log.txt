@@ -1,3 +1,1 @@
-﻿Notes:
-add ability to support special chars in js without it stopping with an exception (DONE)
-Fix it so it doesn't break half way through
+﻿
