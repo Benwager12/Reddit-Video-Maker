@@ -51,9 +51,8 @@ fdata2 = open("scripttts.txt","w+")
 
 #Load questions
 
-# req = requests.get(link, headers={"User-agent":"rb0.1"}).text #gets body from link
-req = open("reddit.txt", "r").read()
-data = json.loads(req)[0]["data"]["children"]
+req = requests.get(link, headers={"User-agent":"rb0.1"}).text #gets body from link
+data = json.loads(req)["data"]["children"]
 print("Building randcom array...\n")
 for question in data:
     question = question["data"]
@@ -85,7 +84,7 @@ selectedurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_
 
 #req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
 
-data = json.loads(req)[1]["data"]["children"]
+data = json.loads(req)["data"]["children"]
 
 print("Building answer data file...\n")
 i = 0

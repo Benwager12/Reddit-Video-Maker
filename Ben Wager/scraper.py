@@ -48,6 +48,7 @@ for question in data:
 
 	print(getScore(question["score"]) + " points\n")
 	questionData["score"] = getScore(question["score"])
+	questionData["author"] = question["author"]
 
 	questionlink = question["url"][0:-1]+".json"
 	questionData["url"] = question["url"]
