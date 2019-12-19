@@ -99,11 +99,11 @@ for answer in data:
     try:
       fdata.write("u/"+answer["author"] + "||" + getscore(answer["score"]) + " points||")
       fdata.write( answer["body"] + "¬¬¬¬¬")
+      fdata2.write(answer["body"] + ".\n\n")
     except:
       print("Error Occurred while writing in script.txt, skipping body..\n")
       continue
     
-    fdata2.write(answer["body"] + ".\n\n")
     i = i + 1
     #randcom.append("https://www.reddit.com" + question["permalink"]) #Get permalink, so we can access the json file
     #print(question["title"] + "\n")
