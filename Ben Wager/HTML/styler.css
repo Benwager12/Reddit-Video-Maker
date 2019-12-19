@@ -1,0 +1,10 @@
+#central-div {
+    height:300px;
+    position:absolute;
+    top:50%;
+}
+
+
+font, p {
+	font-family: Verdana;
+}

@@ -139,7 +139,7 @@ splitscript = open("script.txt").read()
 
 
 try:
-  driver = webdriver.Chrome(options=options1)
+  driver = webdriver.Chrome("../Utilities/chromedriver.exe", options=options1)
   i2 = 0
   screenshotnumber = 0
   for question in splitscript.split("¬¬¬¬¬"):
