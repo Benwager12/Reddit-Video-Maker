@@ -4,16 +4,16 @@ import requests, json, os, sys, shutil
 from html import escape
 from random import randint
 from time import time, sleep
-from gtts import gTTS
 from selenium import webdriver
+from subprocess import Popen as process
 total_time = time()
 start_time = time()
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.opera.options import Options
 
 print("Reverting sketch.js...")
 shutil.copy('backup\sketch.js', 'sketch.js')
 sleep(1)
-WINDOW_SIZE = "1250,1020"
+WINDOW_SIZE = "1260,1020"
 options1 = Options()
 #options1.add_argument('--ignore-certificate-errors')
 #options1.add_argument("--test-type")
@@ -80,11 +80,11 @@ print("Delcaring and setting important vars\n")
 
 #USE THIS TO OVERRIDE THE ANSWERS!
 #You have to get the question manually though!
-selectedurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_whats_a_thing_that_can_be_scary/.json"
+#selectedurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_whats_a_thing_that_can_be_scary/.json"
 
-#req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
+req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
 
-data = json.loads(req)["data"]["children"]
+data = json.loads(req1)[1]["data"]["children"]
 
 print("Building answer data file...\n")
 i = 0
@@ -117,10 +117,14 @@ print("--- %s seconds ---" % round(time() - start_time, 2))
 print("Starting TTS Generation...")
 start_time = time()
 f = open("scripttts.txt")
-#ttstext = f.read()
+ttstext = f.read()
 #ttsobj = gTTS(ttstext,lang="en", slow=False)
 
 #ttsobj.save("script.wav")
+print("Starting TTS Generation")
+command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "voice.wav"]
+process(command)
+
 f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
@@ -137,9 +141,9 @@ parts = ["author","score","comment"]
 authorscorecomments = []
 splitscript = open("script.txt").read()
 
+driver = webdriver.Opera(options=options1)
 
 try:
-  driver = webdriver.Chrome("../Utilities/chromedriver.exe", options=options1)
   i2 = 0
   screenshotnumber = 0
   for question in splitscript.split("¬¬¬¬¬"):
