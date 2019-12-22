@@ -159,7 +159,7 @@ try:
       authorscorecomments.append(part)
       partnumber = partnumber + 1
     print(authorscorecomments)
-    sleep(0.3)
+    #sleep(0.3)
     #SCREENSHOT WEBSITE HERE
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
