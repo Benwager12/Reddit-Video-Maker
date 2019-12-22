@@ -15,9 +15,17 @@ total_time = time()
 start_time = time()
 from selenium.webdriver.opera.options import Options
 
+print("Removing all files from previous generation...")
+
+try:
+  os.remove('script.txt')
+  os.remove('scripttts.txt')
+  os.remove('voice.wav')
+except:
+  print("Error removing files/folders from main dir. Resuming")
+  
 print("Reverting sketch.js...")
 shutil.copy('backup\sketch.js', 'sketch.js')
-#sleep(1)
 WINDOW_SIZE = "1260,1020"
 options1 = Options()
 
