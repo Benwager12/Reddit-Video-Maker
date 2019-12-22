@@ -1,4 +1,9 @@
 ﻿#-----Lloyd 2019-----#
+#-----LunarHunter-----#
+
+#Ver 1.0
+#This version is ready to use!
+#This script is under the The Unlicense license!
 
 import requests, json, os, sys, shutil
 from html import escape
@@ -15,6 +20,9 @@ shutil.copy('backup\sketch.js', 'sketch.js')
 sleep(1)
 WINDOW_SIZE = "1260,1020"
 options1 = Options()
+
+#You can uncomment these param if you replace the webdriver with chrome instead of opera
+
 #options1.add_argument('--ignore-certificate-errors')
 #options1.add_argument("--test-type")
 #options1.add_argument('--headless')
@@ -30,6 +38,7 @@ def getscore(score):
 
 print("Declaring, setting and checking important vars\n")
 #print(os.path.dirname(sys.argv[0]) + "\\wkhtmltoimage.exe")
+
 #This is how far the script goes into comments before stopping
 depthlimit = 25
 
@@ -68,7 +77,6 @@ selectedurl = str(randcom[genint]) + ".json"
 #print(selectedurl)
 print("\nFound random URL. Getting json from said url.\n")
 
-#fdata.write(randcomquestion[genint] + "\n\n")
 fdata2.write(randcomquestion[genint]+ "\n\n")
 
 #Stage 2
@@ -118,20 +126,17 @@ print("Starting TTS Generation...")
 start_time = time()
 f = open("scripttts.txt")
 ttstext = f.read()
-#ttsobj = gTTS(ttstext,lang="en", slow=False)
-
-#ttsobj.save("script.wav")
-print("Starting TTS Generation")
+print("Starting TTS Generation and removing invaild characters...")
+ttstext = ttstext.replace("\"", "")
+ttstext = ttstext.replace("\\", "")
+#ttstext = ttstext.replace("\n", "")
+ttstext = ttstext.replace("\\\\\"", "")
 command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "voice.wav"]
 process(command)
 
 f.close()
 print("TTS Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
-
-#Somewhat working script, unable to take screenshots of website
-#without driver for chrome
-#Doing it in VB instead
 
 #Gets all parts of the script like author, score and author
 
@@ -144,25 +149,18 @@ splitscript = open("script.txt").read()
 driver = webdriver.Opera(options=options1)
 
 try:
-  #i2 = 0
   screenshotnumber = 0
   for question in splitscript.split("¬¬¬¬¬"):
 
-    #if i2 == 0:
-    #  i2 = i2 + 1
-    #  continue
     for part in question.split("||"):
-      #print("1")
       if partnumber > 2:
         partnumber = 0
       print(part + " " + parts[partnumber])
       authorscorecomments.append(part)
       partnumber = partnumber + 1
     print(authorscorecomments)
-    
     sleep(0.3)
     #SCREENSHOT WEBSITE HERE
-
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
     authorscorecomments[2] = authorscorecomments[2].replace("\n", "\\n")
