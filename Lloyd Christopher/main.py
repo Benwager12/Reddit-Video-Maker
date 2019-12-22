@@ -17,7 +17,7 @@ from selenium.webdriver.opera.options import Options
 
 print("Reverting sketch.js...")
 shutil.copy('backup\sketch.js', 'sketch.js')
-sleep(1)
+#sleep(1)
 WINDOW_SIZE = "1260,1020"
 options1 = Options()
 
