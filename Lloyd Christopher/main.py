@@ -68,7 +68,7 @@ selectedurl = str(randcom[genint]) + ".json"
 #print(selectedurl)
 print("\nFound random URL. Getting json from said url.\n")
 
-fdata.write(randcomquestion[genint] + "\n\n")
+#fdata.write(randcomquestion[genint] + "\n\n")
 fdata2.write(randcomquestion[genint]+ "\n\n")
 
 #Stage 2
@@ -144,13 +144,13 @@ splitscript = open("script.txt").read()
 driver = webdriver.Opera(options=options1)
 
 try:
-  i2 = 0
+  #i2 = 0
   screenshotnumber = 0
   for question in splitscript.split("¬¬¬¬¬"):
 
-    if i2 == 0:
-      i2 = i2 + 1
-      continue
+    #if i2 == 0:
+    #  i2 = i2 + 1
+    #  continue
     for part in question.split("||"):
       #print("1")
       if partnumber > 2:
@@ -158,29 +158,11 @@ try:
       print(part + " " + parts[partnumber])
       authorscorecomments.append(part)
       partnumber = partnumber + 1
-    #print(authorscorecomments)
-    #if '"' in authorscorecomments[2]:
-    #  print("1")
-    #  continue
-    #fin = open("sketch.js","rt")
-    #data1 = fin.read()
-
-    
-    #data1 = data1.replace("replaceme1author",authorscorecomments[0])
-    #data1 = data1.replace("replaceme2score",authorscorecomments[1])
-    #authorscorecomments[2] = authorscorecomments[2].replace("\\","\\\\").replace("\n","").replace("\"", "\\\"").replace("\'", "\\\'")
-    #authorscorecomments[2] = escape(authorscorecomments[2])
-    #data1 = data1.replace("replaceme3comment",authorscorecomments[2])
-
-    #fin.close()
-
-    #fin = open("sketch.js","wt")
-    #fin.write(data1)
-    #fin.close()
+    print(authorscorecomments)
     
     sleep(0.3)
     #SCREENSHOT WEBSITE HERE
-    #print(screenshotnumber)
+
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
     authorscorecomments[2] = authorscorecomments[2].replace("\n", "\\n")
@@ -192,23 +174,9 @@ try:
     driver.execute_script(script)
     sleep(0.4)
     driver.save_screenshot("generated_screenshots\\screenshot"+str(screenshotnumber)+".png")
-    #sleep(5)
-    #driver.quit()
-    #print(authorscorecomments[0])
-    #print(authorscorecomments[1])
-    #print(authorscorecomments[2])
-    print("Driver Screenshot completed: " + str(screenshotnumber))
-    #fin = open("sketch.js","rt")
-    #data1 = fin.read()
-    
-    #data1 = data1.replace(authorscorecomments[0],"replaceme1author")
-    #data1 = data1.replace(authorscorecomments[1],"replaceme2score")
-    #data1 = data1.replace(authorscorecomments[2],"replaceme3comment")
-    #fin.close()
 
-    #fin = open("sketch.js","wt")
-    #fin.write(data1)
-    #fin.close()
+    print("Driver Screenshot completed: " + str(screenshotnumber))
+
     screenshotnumber = screenshotnumber + 1
     authorscorecomments = []
     
