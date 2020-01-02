@@ -1,9 +1,22 @@
 ﻿#-----Lloyd 2019-----#
 #-----LunarHunter-----#
-
-#Ver 1.0
-#This version is ready to use!
 #This script is under the The Unlicense license!
+
+#Ver 2.0
+#This version is NOT ready to use and has some improvements over the last ver.
+
+#This version could support ffmpeg if I implement the speech gen into the screenshot
+#loop.
+
+#I would suggest running in a VM to avoid any problems that prevents termination.
+
+#TODO:
+#Generate question via html
+#Generate tts separate to each one
+#FFMPEG make on each answer and combine them together with each one having a beep splitting each one
+#Upload automatically after qc (quality control)/manual check
+#Generate Thumbnail maybe?
+#Add exclusion list to ensure that questions aren't repeated
 
 import requests, json, os, sys, shutil
 from html import escape
@@ -14,6 +27,11 @@ from subprocess import Popen as process
 total_time = time()
 start_time = time()
 from selenium.webdriver.opera.options import Options
+
+answer = input('Please indicate approval: [y/n]')
+if not answer or answer[0].lower() != 'y':
+    print('You did not indicate approval!')
+    exit(1)
 
 print("Removing all files from previous generation...")
 
@@ -128,23 +146,19 @@ for answer in data:
 print("Closing script files...\n")
 fdata.close()
 fdata2.close()
+
+
 print("Script Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
-print("Starting TTS Generation...")
-start_time = time()
-f = open("scripttts.txt")
-ttstext = f.read()
-print("Starting TTS Generation and removing invaild characters...")
-ttstext = ttstext.replace("\"", "")
-ttstext = ttstext.replace("\\", "")
-#ttstext = ttstext.replace("\n", "")
-ttstext = ttstext.replace("\\\\\"", "")
-command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "voice.wav"]
-process(command)
+#print("Starting TTS Generation...")
 
-f.close()
-print("TTS Generation finished at:")
-print("--- %s seconds ---" % round(time() - start_time, 2))
+
+#start_time = time()
+
+
+#f.close()
+#print("TTS Generation finished at:")
+#print("--- %s seconds ---" % round(time() - start_time, 2))
 
 #Gets all parts of the script like author, score and author
 
@@ -169,6 +183,18 @@ try:
     print(authorscorecomments)
     #sleep(0.3)
     #SCREENSHOT WEBSITE HERE
+
+    print("Generating TTS for sep file...")
+
+    ttstext = authorscorecomments[2]
+    print("Starting TTS Generation and removing invaild characters...")
+    ttstext = ttstext.replace("\"", "")
+    ttstext = ttstext.replace("\\", "")
+    #ttstext = ttstext.replace("\n", "")
+    ttstext = ttstext.replace("\\\\\"", "")
+    command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "generated_screenshots\\"+str(screenshotnumber)+".wav"]
+    process(command)
+    
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
     authorscorecomments[2] = authorscorecomments[2].replace("\n", "\\n")
@@ -179,10 +205,10 @@ try:
     print(script)
     driver.execute_script(script)
     sleep(0.4)
-    driver.save_screenshot("generated_screenshots\\screenshot"+str(screenshotnumber)+".png")
+    driver.save_screenshot("generated_screenshots\\"+str(screenshotnumber)+".png")
 
     print("Driver Screenshot completed: " + str(screenshotnumber))
-
+    
     screenshotnumber = screenshotnumber + 1
     authorscorecomments = []
     
