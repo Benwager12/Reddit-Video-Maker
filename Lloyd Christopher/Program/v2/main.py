@@ -12,7 +12,7 @@
 
 #TODO:
 #Generate question via html
-#Generate tts separate to each one
+#Generate tts separate to each one DONE
 #FFMPEG make on each answer and combine them together with each one having a beep splitting each one
 #Upload automatically after qc (quality control)/manual check
 #Generate Thumbnail maybe?
@@ -28,7 +28,8 @@ total_time = time()
 start_time = time()
 from selenium.webdriver.opera.options import Options
 
-answer = input('Please indicate approval: [y/n]')
+answer = input('This program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
+               'Please indicate approval to running the program and agreeing to the terms of the license: [y/n]')
 if not answer or answer[0].lower() != 'y':
     print('You did not indicate approval!')
     exit(1)
@@ -130,6 +131,7 @@ for answer in data:
     #print(answer.keys())
     if answer.get("author") == None: continue
     if answer["author"] == "AutoModerator": continue
+    if answer["author"].lower() == "deleted": continue
     try:
       fdata.write("u/"+answer["author"] + "||" + getscore(answer["score"]) + " points||")
       fdata.write( answer["body"] + "¬¬¬¬¬")
@@ -150,17 +152,6 @@ fdata2.close()
 
 print("Script Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
-#print("Starting TTS Generation...")
-
-
-#start_time = time()
-
-
-#f.close()
-#print("TTS Generation finished at:")
-#print("--- %s seconds ---" % round(time() - start_time, 2))
-
-#Gets all parts of the script like author, score and author
 
 start_time = time()
 partnumber = 0
@@ -192,7 +183,7 @@ try:
     ttstext = ttstext.replace("\\", "")
     #ttstext = ttstext.replace("\n", "")
     ttstext = ttstext.replace("\\\\\"", "")
-    command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "generated_screenshots\\"+str(screenshotnumber)+".wav"]
+    command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"]
     process(command)
     
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
@@ -205,20 +196,28 @@ try:
     print(script)
     driver.execute_script(script)
     sleep(0.4)
-    driver.save_screenshot("generated_screenshots\\"+str(screenshotnumber)+".png")
+    driver.save_screenshot("temp\\"+str(screenshotnumber)+".png")
 
     print("Driver Screenshot completed: " + str(screenshotnumber))
     
     screenshotnumber = screenshotnumber + 1
     authorscorecomments = []
     
+    #to ensure that the system running the script doesn't get overloaded with the balcom program.
+    sleep(1)
+    
 except Exception as e:
   print("Exception Occurred, probably normal. Continuing: " + str(e))
+
+driver.quit()
 
 print("P5 screenshot finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
-driver.quit()
+print("Starting ffmpeg combine...")
+
+
+start_time = time()
 
 print("\n\nTotal finished at:")
 print("--- %s seconds ---" % round(time() - total_time, 2))
