@@ -1,0 +1,3 @@
+Plan:
+vidgen shows a list of the music to add.
+adds it on to the final vid

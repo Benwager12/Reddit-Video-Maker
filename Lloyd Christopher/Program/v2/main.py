@@ -13,6 +13,7 @@
 #TODO:
 #Generate question via html
 #Generate tts separate to each one DONE
+#Combine sound and image together DONE
 #FFMPEG make on each answer and combine them together with each one having a beep splitting each one
 #Upload automatically after qc (quality control)/manual check
 #Generate Thumbnail maybe?
@@ -24,6 +25,7 @@ from random import randint
 from time import time, sleep
 from selenium import webdriver
 from subprocess import Popen as process
+import vidgen
 total_time = time()
 start_time = time()
 from selenium.webdriver.opera.options import Options
@@ -43,8 +45,6 @@ try:
 except:
   print("Error removing files/folders from main dir. Resuming")
   
-print("Reverting sketch.js...")
-shutil.copy('backup\sketch.js', 'sketch.js')
 WINDOW_SIZE = "1260,1020"
 options1 = Options()
 
@@ -80,9 +80,10 @@ if depthlimit <=0 or selectedurl != "" or link == "":
   quit()
 print("Done checking vars\n")
 
-print("Opening data.txt...  - INFO")
+print("Opening/creating files important to program...  - INFO")
 fdata = open("script.txt","w+")
 fdata2 = open("scripttts.txt","w+")
+
 
 
 #Load questions
@@ -216,8 +217,12 @@ print("--- %s seconds ---" % round(time() - start_time, 2))
 
 print("Starting ffmpeg combine...")
 
-
 start_time = time()
+
+vidgen.genmp4()
+
+print("FFMPEG combine finished at:")
+print("--- %s seconds ---" % round(time() - start_time, 2))
 
 print("\n\nTotal finished at:")
 print("--- %s seconds ---" % round(time() - total_time, 2))
