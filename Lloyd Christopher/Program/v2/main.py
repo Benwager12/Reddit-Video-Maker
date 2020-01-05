@@ -11,13 +11,7 @@
 #I would suggest running in a VM to avoid any problems that prevents termination.
 
 #TODO:
-#Generate question via html
-#Generate tts separate to each one DONE
-#Combine sound and image together DONE
-#FFMPEG make on each answer and combine them together with each one having a beep splitting each one
-#Upload automatically after qc (quality control)/manual check
-#Generate Thumbnail maybe?
-#Add exclusion list to ensure that questions aren't repeated
+#Upload automatically after qc (quality control)/manual check Not possible I think
 
 import requests, json, os, sys, shutil
 from html import escape
@@ -30,7 +24,10 @@ total_time = time()
 start_time = time()
 from selenium.webdriver.opera.options import Options
 
-answer = input('-----LunarHunter 2019-----\nReddit Video Maker\n\nThis program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
+answer = input('-----LunarHunter 2019-----\n-----Reddit Video Maker-----\n\nThis program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
+               'Notes:\n' +      
+               'Please delete all files in temp and vidgen before running this program! I will add this feature soon but not currently a priority.\n' +
+               'The final video requires background music so manual editing is required\n\n' +
                'Please indicate approval to running the program and agreeing to the terms of the license: [y/n]')
 if not answer or answer[0].lower() != 'y':
     print('You did not indicate approval!')
@@ -46,7 +43,7 @@ try:
 except:
   print("Error removing files/folders from main dir. Resuming")
   
-WINDOW_SIZE = "1260,1020"
+WINDOW_SIZE = "1920,1080"
 options1 = Options()
 
 #You can uncomment these param if you replace the webdriver with chrome instead of opera
@@ -101,9 +98,21 @@ for question in data:
 
 print(str(len(randcom)-1) + " total url's found in randcom array! - INFO\n")
 print("Selecting Random URL from randcom... - INFO\n")
+
 genint = randint(0,len(randcom)-1)
 selectedurl = str(randcom[genint]) + ".json"
+
+#exclusions = open("exclusions.txt", "w+")
+#if str(randcom[genint]) in exclusions.read():
+#    print("BREAK! Link that is selected is in the exclusion list.")
+#    sleep(2)
+#    exit(1)
+
+exclusions.write(str(randcom[genint]) + "\n")
+exclusions.close()
 #print(selectedurl)
+print("Generating question image...")
+vidgen.genquestionimage(str(randcom[genint]))
 print("\nFound random URL. Getting json from said url.\n")
 
 fdata2.write(randcomquestion[genint]+ "\n\n")
@@ -137,7 +146,7 @@ for answer in data:
     try:
       fdata.write("u/"+answer["author"] + "||" + getscore(answer["score"]) + " points||")
       fdata.write( answer["body"] + "¬¬¬¬¬")
-      fdata2.write(answer["body"] + ".\n\n")
+      #fdata2.write(answer["body"] + ".\n\n")
     except:
       print("Error Occurred while writing in script.txt, skipping body..\n")
       continue
@@ -162,6 +171,9 @@ authorscorecomments = []
 splitscript = open("script.txt").read()
 
 driver = webdriver.Opera(options=options1)
+
+command = ["balcon", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"]
+process(command)
 
 try:
   screenshotnumber = 0
@@ -224,6 +236,16 @@ vidgen.genmp4()
 
 print("FFMPEG combine finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
+
+print("Starting ffmpeg final generation...")
+
+start_time = time()
+
+vidgen.genfinalvid()
+
+print("FFMPEG final generation finished at:")
+print("--- %s seconds ---" % round(time() - start_time, 2))
+
 
 print("\n\nTotal finished at:")
 print("--- %s seconds ---" % round(time() - total_time, 2))

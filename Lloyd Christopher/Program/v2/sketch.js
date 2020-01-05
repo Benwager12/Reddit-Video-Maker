@@ -19,7 +19,7 @@ function drawText( x, y, text_array ) {
 function setup() {
   lines = round(textWidth(comment)/500)+3;
   textSize(17);
-  createCanvas(1200, 850);
+  createCanvas(1860, 910);
   textFont("Verdana");
   textAlign(LEFT, TOP);
            

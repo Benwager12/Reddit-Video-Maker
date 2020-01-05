@@ -1,0 +1,92 @@
+ffmpeg version git-2020-01-01-7b58702 Copyright (c) 2000-2020 the FFmpeg developers
+  built with gcc 9.2.1 (GCC) 20191125
+  configuration: --enable-gpl --enable-version3 --enable-sdl2 --enable-fontconfig --enable-gnutls --enable-iconv --enable-libass --enable-libdav1d --enable-libbluray --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-libopus --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libtheora --enable-libtwolame --enable-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libzimg --enable-lzma --enable-zlib --enable-gmp --enable-libvidstab --enable-libvorbis --enable-libvo-amrwbenc --enable-libmysofa --enable-libspeex --enable-libxvid --enable-libaom --enable-libmfx --enable-ffnvcodec --enable-cuvid --enable-d3d11va --enable-nvenc --enable-nvdec --enable-dxva2 --enable-avisynth --enable-libopenmpt --enable-amf
+  libavutil      56. 38.100 / 56. 38.100
+  libavcodec     58. 65.100 / 58. 65.100
+  libavformat    58. 35.101 / 58. 35.101
+  libavdevice    58.  9.102 / 58.  9.102
+  libavfilter     7. 70.101 /  7. 70.101
+  libswscale      5.  6.100 /  5.  6.100
+  libswresample   3.  6.100 /  3.  6.100
+  libpostproc    55.  6.100 / 55.  6.100
+Trailing option(s) found in the command: may be ignored.
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'final.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2mp41
+    encoder         : Lavf58.35.101
+  Duration: 00:03:25.46, start: 0.000000, bitrate: 529 kb/s
+    Stream #0:0(und): Video: mpeg4 (Simple Profile) (mp4v / 0x7634706D), yuv420p, 1920x1021 [SAR 1:1 DAR 1920:1021], 489 kb/s, 0.97 fps, 11 tbr, 11264 tbn, 11 tbc (default)
+    Metadata:
+      handler_name    : VideoHandler
+    Stream #0:1(und): Audio: mp3 (mp4a / 0x6134706D), 22050 Hz, mono, fltp, 38 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+[mp3 @ 0000024be02c2f40] Estimating duration from bitrate, this may be inaccurate
+Input #1, mp3, from 'SFX\1.mp3':
+  Metadata:
+    title           : Mister Exposition
+    artist          : Kevin MacLeod
+    album           : Scoring - Silent Film: Bright
+    TBP             : 85
+    comment         : incompetech.com
+    iTunPGAP        : 0
+    encoded_by      : iTunes v7.0.2.16
+    iTunNORM        :  00000259 000002B0 0000276F 00003057 00016F3E 00019B6D 00007226 0000736C 000142DB 00019B6D
+    iTunSMPB        :  00000000 00000210 0000088C 00000000005E9964 00000000 0055B6DC 00000000 00000000 00000000 00000000 00000000 00000000
+    genre           : Silent Film Score
+    TCM             : Kevin MacLeod
+    date            : 2006
+  Duration: 00:02:20.64, start: 0.000000, bitrate: 326 kb/s
+    Stream #1:0: Audio: mp3, 44100 Hz, stereo, fltp, 320 kb/s
+    Stream #1:1: Video: mjpeg (Baseline), yuvj444p(pc, bt470bg/unknown/unknown), 400x400 [SAR 72:72 DAR 1:1], 90k tbr, 90k tbn, 90k tbc (attached pic)
+    Metadata:
+      comment         : Other
+Stream mapping:
+  Stream #0:1 (mp3float) -> amix:input0 (graph 0)
+  Stream #1:0 (mp3float) -> volume (graph 0)
+  amix (graph 0) -> Stream #0:0 (aac)
+  Stream #0:0 -> #0:1 (mpeg4 (native) -> h264 (libx264))
+Press [q] to stop, [?] for help
+[libx264 @ 0000024be02da340] using SAR=1/1
+[libx264 @ 0000024be02da340] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0000024be02da340] profile High, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0000024be02da340] 264 - core 158 - H.264/MPEG-4 AVC codec - Copyleft 2003-2019 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=6 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=11 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'finalgen_video.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2mp41
+    encoder         : Lavf58.35.101
+    Stream #0:0: Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, mono, fltp, 69 kb/s (default)
+    Metadata:
+      encoder         : Lavc58.65.100 aac
+    Stream #0:1(und): Video: h264 (libx264) (avc1 / 0x31637661), yuv420p, 1920x1022 [SAR 1:1 DAR 960:511], q=-1--1, 11 fps, 11264 tbn, 11 tbc (default)
+    Metadata:
+      handler_name    : VideoHandler
+      encoder         : Lavc58.65.100 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+frame=   68 fps=0.0 q=26.0 size=       0kB time=00:00:02.69 bitrate=   0.1kbits/s dup=58 drop=0 speed=3.27x    frame=  121 fps= 50 q=23.0 size=       0kB time=00:00:06.18 bitrate=   0.1kbits/s dup=103 drop=0 speed=2.56x    frame=  127 fps= 43 q=26.0 size=     768kB time=00:00:10.99 bitrate= 572.4kbits/s dup=104 drop=0 speed=3.76x    frame=  439 fps= 64 q=26.0 size=    1536kB time=00:00:35.09 bitrate= 358.6kbits/s dup=405 drop=0 speed=5.13x    frame=  563 fps= 61 q=26.0 size=    1792kB time=00:00:46.36 bitrate= 316.6kbits/s dup=521 drop=0 speed=5.02x    frame=  604 fps= 61 q=26.0 size=    2048kB time=00:00:51.16 bitrate= 327.9kbits/s dup=554 drop=0 speed=5.15x    frame=  666 fps= 55 q=26.0 size=    2304kB time=00:00:55.72 bitrate= 338.7kbits/s dup=608 drop=0 speed=4.58x    frame=  777 fps= 57 q=26.0 size=    3072kB time=00:01:05.81 bitrate= 382.4kbits/s dup=711 drop=0 speed=4.83x    frame=  966 fps= 61 q=26.0 size=    3584kB time=00:01:23.00 bitrate= 353.7kbits/s dup=892 drop=0 speed=5.26x    frame= 1016 fps= 62 q=26.0 size=    3840kB time=00:01:27.81 bitrate= 358.2kbits/s dup=933 drop=0 speed=5.33x    More than 1000 frames duplicated
+frame= 1203 fps= 64 q=26.0 size=    4608kB time=00:01:49.31 bitrate= 345.3kbits/s dup=1113 drop=0 speed= 5.8x    frame= 1258 fps= 63 q=26.0 size=    4608kB time=00:01:49.54 bitrate= 344.6kbits/s dup=1160 drop=0 speed=5.52x    frame= 1495 fps= 67 q=26.0 size=    5376kB time=00:02:11.09 bitrate= 336.0kbits/s dup=1389 drop=0 speed=5.88x    frame= 1616 fps= 68 q=26.0 size=    5632kB time=00:02:22.09 bitrate= 324.7kbits/s dup=1502 drop=0 speed=5.95x    frame= 1788 fps= 69 q=26.0 size=    6144kB time=00:02:37.72 bitrate= 319.1kbits/s dup=1666 drop=0 speed=6.13x    frame= 1835 fps= 70 q=26.0 size=    6144kB time=00:02:42.52 bitrate= 309.7kbits/s dup=1704 drop=0 speed=6.19x    frame= 1890 fps= 68 q=26.0 size=    6400kB time=00:02:47.00 bitrate= 313.9kbits/s dup=1752 drop=0 speed=5.98x    frame= 1939 fps= 68 q=26.0 size=    7168kB time=00:02:51.74 bitrate= 341.9kbits/s dup=1786 drop=0 speed=6.01x    frame= 2030 fps= 67 q=26.0 size=    7168kB time=00:02:59.72 bitrate= 326.7kbits/s dup=1876 drop=0 speed=5.95x    frame= 2104 fps= 67 q=26.0 size=    8192kB time=00:03:06.45 bitrate= 359.9kbits/s dup=1942 drop=0 speed=5.93x    frame= 2144 fps= 67 q=26.0 size=    8192kB time=00:03:11.26 bitrate= 350.9kbits/s dup=1970 drop=0 speed=5.97x    frame= 2174 fps= 66 q=26.0 size=    8448kB time=00:03:12.81 bitrate= 358.9kbits/s dup=1996 drop=0 speed=5.83x    frame= 2220 fps= 65 q=26.0 size=    8960kB time=00:03:17.61 bitrate= 371.4kbits/s dup=2034 drop=0 speed=5.78x    frame= 2228 fps= 64 q=26.0 size=    9216kB time=00:03:17.72 bitrate= 381.8kbits/s dup=2035 drop=0 speed= 5.7x    frame= 2260 fps= 64 q=26.0 size=    9472kB time=00:03:24.82 bitrate= 378.8kbits/s dup=2060 drop=0 speed= 5.8x    frame= 2260 fps= 61 q=-1.0 Lsize=   10459kB time=00:03:25.18 bitrate= 417.6kbits/s dup=2060 drop=0 speed=5.55x    
+video:10409kB audio:21kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.278606%
+[aac @ 0000024be20b4300] Qavg: 8538.439
+[libx264 @ 0000024be02da340] frame I:51    Avg QP:12.85  size: 75623
+[libx264 @ 0000024be02da340] frame P:611   Avg QP: 9.41  size:  8232
+[libx264 @ 0000024be02da340] frame B:1598  Avg QP:11.10  size:  1109
+[libx264 @ 0000024be02da340] consecutive B-frames:  4.7%  2.6%  1.6% 91.2%
+[libx264 @ 0000024be02da340] mb I  I16..4: 34.1% 55.7% 10.2%
+[libx264 @ 0000024be02da340] mb P  I16..4:  2.1% 11.2%  1.0%  P16..4:  1.2%  0.5%  0.1%  0.0%  0.0%    skip:84.0%
+[libx264 @ 0000024be02da340] mb B  I16..4:  0.2%  0.6%  0.1%  B16..8:  1.0%  0.4%  0.0%  direct: 0.6%  skip:97.3%  L0:88.0% L1:10.6% BI: 1.4%
+[libx264 @ 0000024be02da340] 8x8 transform intra:69.7% inter:85.9%
+[libx264 @ 0000024be02da340] coded y,uvDC,uvAC intra: 53.5% 3.6% 0.0% inter: 0.8% 1.0% 0.0%
+[libx264 @ 0000024be02da340] i16 v,h,dc,p: 59% 27%  5% 10%
+[libx264 @ 0000024be02da340] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 31% 31% 15%  4%  3%  4%  4%  4%  4%
+[libx264 @ 0000024be02da340] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 30%  9%  3%  4%  4%  4%  3%  3%
+[libx264 @ 0000024be02da340] i8c dc,h,v,p: 90%  5%  4%  0%
+[libx264 @ 0000024be02da340] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0000024be02da340] ref P L0: 71.7%  9.4% 14.3%  4.6%
+[libx264 @ 0000024be02da340] ref B L0: 93.3%  6.7%
+[libx264 @ 0000024be02da340] ref B L1: 100.0%  0.0%
+[libx264 @ 0000024be02da340] kb/s:415.01
