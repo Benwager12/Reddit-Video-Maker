@@ -108,8 +108,8 @@ selectedurl = str(randcom[genint]) + ".json"
 #    sleep(2)
 #    exit(1)
 
-exclusions.write(str(randcom[genint]) + "\n")
-exclusions.close()
+#exclusions.write(str(randcom[genint]) + "\n")
+#exclusions.close()
 #print(selectedurl)
 print("Generating question image...")
 vidgen.genquestionimage(str(randcom[genint]))
