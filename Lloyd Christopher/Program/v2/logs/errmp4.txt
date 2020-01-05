@@ -9,18 +9,4 @@ ffmpeg version git-2020-01-01-7b58702 Copyright (c) 2000-2020 the FFmpeg develop
   libswscale      5.  6.100 /  5.  6.100
   libswresample   3.  6.100 /  3.  6.100
   libpostproc    55.  6.100 / 55.  6.100
-Input #0, concat, from 'list.txt':
-  Duration: N/A, start: 0.000000, bitrate: 32 kb/s
-    Stream #0:0: Video: mpeg4 (Simple Profile) (FMP4 / 0x34504D46), yuv420p, 1920x1485 [SAR 1:1 DAR 128:99], 11 fps, 11 tbr, 11 tbn, 11 tbc
-    Stream #0:1: Audio: mp3 (U[0][0][0] / 0x0055), 22050 Hz, mono, fltp, 32 kb/s
-Output #0, mp4, to 'final.mp4':
-  Metadata:
-    encoder         : Lavf58.35.101
-    Stream #0:0: Video: mpeg4 (Simple Profile) (mp4v / 0x7634706D), yuv420p, 1920x1485 [SAR 1:1 DAR 128:99], q=2-31, 11 fps, 11 tbr, 11264 tbn, 11 tbc
-    Stream #0:1: Audio: mp3 (mp4a / 0x6134706D), 22050 Hz, mono, fltp, 32 kb/s
-Stream mapping:
-  Stream #0:0 -> #0:0 (copy)
-  Stream #0:1 -> #0:1 (copy)
-Press [q] to stop, [?] for help
-frame=  200 fps=0.0 q=-1.0 Lsize=   13348kB time=00:02:41.90 bitrate= 675.3kbits/s speed= 550x    
-video:12520kB audio:797kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.231963%
+temp\29.png: No such file or directory

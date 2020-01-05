@@ -30,10 +30,11 @@ total_time = time()
 start_time = time()
 from selenium.webdriver.opera.options import Options
 
-answer = input('This program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
+answer = input('-----LunarHunter 2019-----\nReddit Video Maker\n\nThis program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
                'Please indicate approval to running the program and agreeing to the terms of the license: [y/n]')
 if not answer or answer[0].lower() != 'y':
     print('You did not indicate approval!')
+    sleep(2)
     exit(1)
 
 print("Removing all files from previous generation...")
@@ -205,7 +206,7 @@ try:
     authorscorecomments = []
     
     #to ensure that the system running the script doesn't get overloaded with the balcom program.
-    sleep(1)
+    #sleep(1)
     
 except Exception as e:
   print("Exception Occurred, probably normal. Continuing: " + str(e))
