@@ -3,7 +3,7 @@
 #This script is under the The Unlicense license!
 
 #Ver 2.0
-#This version is NOT ready to use and has some improvements over the last ver.
+#This version is ready to use and has some improvements over the last ver.
 
 #This version could support ffmpeg if I implement the speech gen into the screenshot
 #loop.
@@ -102,14 +102,14 @@ print("Selecting Random URL from randcom... - INFO\n")
 genint = randint(0,len(randcom)-1)
 selectedurl = str(randcom[genint]) + ".json"
 
-#exclusions = open("exclusions.txt", "w+")
-#if str(randcom[genint]) in exclusions.read():
-#    print("BREAK! Link that is selected is in the exclusion list.")
-#    sleep(2)
-#    exit(1)
+exclusions = open("exclusions.txt", "a")
+if str(randcom[genint]) in exclusions.read():
+    print("BREAK! Link that is selected is in the exclusion list.")
+    sleep(2)
+    exit(1)
 
-#exclusions.write(str(randcom[genint]) + "\n")
-#exclusions.close()
+exclusions.write(str(randcom[genint]) + "\n")
+exclusions.close()
 #print(selectedurl)
 print("Generating question image...")
 vidgen.genquestionimage(str(randcom[genint]))
