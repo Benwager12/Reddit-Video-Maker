@@ -1,25 +1,30 @@
 import json
-from subprocess import Popen as process
+from subprocess import call as run
 from os import path, makedirs
 
 def speak(words, directory_fileName=None):
-	print(path.exists("/Voices/"+directory_fileName[0]+"/"))
 	try:
 		makedirs("Voices/"+directory_fileName[0]+"/")
 	except FileExistsError:
 		pass
-	arr = ["speak", "-n", "Daniel", "-t", words]
+	arr = ["../Utilities/speak", "-n", "Daniel", "-t", words]
 	if not directory_fileName is None:
 		arr.append("-w")
 		arr.append("Voices/"+directory_fileName[0]+"/"+directory_fileName[1]+".wav")
-	#process(arr)
+	run(arr)
 
 def saveSpeak(words, directory_fileName=None):
 	print("Started voice output... ", end="")
-	speak(questionTitle, directory_fileName)
+	speak(words, directory_fileName)
 	print("Ended voice output")
 
-file = json.loads(open("template.json", "r").read())
+question = "0"
+while not path.exists("Outputs/"+question+".json"):
+        question = input("Choose the question to speak (from outputs): ")
+        print("Outputs/"+question+".json")
+        if not path.exists("Outputs/"+question+".json"):
+                print("File does not exist.\n")
+file = json.loads(open("Outputs/"+question+".json", "r").read())
 
 questionTitle, questionId = file["title"], file["id"]
 questionScore, questionAuthor = file["score"], file["author"]
@@ -38,7 +43,13 @@ for comment in comments:
 	commentedCreated, commentComment = comment["created"], comment["comment"]
 	commentId = comment["id"]
 
-	print(f"{commentAuthor}  {commentScore} · {commentedCreated} ago")
-	print(commentComment)
-	saveSpeak(commentComment, [questionId,"/comment-"+commentId])
+	#print(f"{commentAuthor}  {commentScore} · {commentedCreated} ago")
+	#print(commentComment)
+
+	#print(commentComment)
+	#print([questionId,"/comment-"+commentId])
+	#print()
+
+
+	saveSpeak(commentComment, [questionId,"comment-"+commentId])
 	print("")

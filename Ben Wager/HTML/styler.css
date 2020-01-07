@@ -1,17 +1,3 @@
-html, body {
-    height: 100%;
-}
-
-#central-div {
-    width: 100%;
-    height: 50%;
-    display: table;
-}
-#central-div > * {
-    display: table-cell;
-    vertical-align: middle;
-}
-
 span, p, b, h2 {
 	font-family: Verdana;
 }
