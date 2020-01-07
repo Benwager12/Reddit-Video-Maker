@@ -22,7 +22,7 @@ from subprocess import Popen as process
 import vidgen
 total_time = time()
 start_time = time()
-from selenium.webdriver.opera.options import Options
+from selenium.webdriver.chrome.options import Options
 
 answer = input('-----LunarHunter 2019-----\n-----Reddit Video Maker-----\n\nThis program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
                'Notes:\n' +      
@@ -86,7 +86,8 @@ fdata2 = open("scripttts.txt","w+")
 
 #Load questions
 
-req = requests.get(link, headers={"User-agent":"rb0.1"}).text #gets body from link
+#req = requests.get(link, headers={"User-agent":"rb0.1"}).text #gets body from link
+req = open("data.json", "r").read()
 data = json.loads(req)["data"]["children"]
 print("Building randcom array...\n")
 for question in data:
@@ -102,17 +103,17 @@ print("Selecting Random URL from randcom... - INFO\n")
 genint = randint(0,len(randcom)-1)
 selectedurl = str(randcom[genint]) + ".json"
 
-exclusions = open("exclusions.txt", "a")
-if str(randcom[genint]) in exclusions.read():
-    print("BREAK! Link that is selected is in the exclusion list.")
-    sleep(2)
-    exit(1)
+#exclusions = open("exclusions.txt", "a")
+#if str(randcom[genint]) in exclusions.read():
+#    print("BREAK! Link that is selected is in the exclusion list.")
+#    sleep(2)
+#    exit(1)
 
-exclusions.write(str(randcom[genint]) + "\n")
-exclusions.close()
+#exclusions.write(str(randcom[genint]) + "\n")
+#exclusions.close()
 #print(selectedurl)
 print("Generating question image...")
-vidgen.genquestionimage(str(randcom[genint]))
+#vidgen.genquestionimage(str(randcom[genint]))
 print("\nFound random URL. Getting json from said url.\n")
 
 fdata2.write(randcomquestion[genint]+ "\n\n")
@@ -127,8 +128,8 @@ print("Delcaring and setting important vars\n")
 #USE THIS TO OVERRIDE THE ANSWERS!
 #You have to get the question manually though!
 #selectedurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_whats_a_thing_that_can_be_scary/.json"
-
-req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
+print(selectedurl)
+req1 = open("data1.json", "r").read()
 
 data = json.loads(req1)[1]["data"]["children"]
 
@@ -170,9 +171,9 @@ parts = ["author","score","comment"]
 authorscorecomments = []
 splitscript = open("script.txt").read()
 
-driver = webdriver.Opera(options=options1)
+driver = webdriver.Chrome(options=options1)
 
-command = ["balcon", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"]
+command = ["balcon", "-n", "David", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"]
 process(command)
 
 try:
@@ -197,7 +198,7 @@ try:
     ttstext = ttstext.replace("\\", "")
     #ttstext = ttstext.replace("\n", "")
     ttstext = ttstext.replace("\\\\\"", "")
-    command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"]
+    command = ["balcon", "-n", "David", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"]
     process(command)
     
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")

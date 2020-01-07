@@ -4,7 +4,7 @@
 import os, subprocess
 from PIL import Image
 from selenium import webdriver
-from selenium.webdriver.opera.options import Options
+from selenium.webdriver.chrome.options import Options
 from time import sleep
 def genmp4():
     counta = 0
@@ -23,13 +23,13 @@ def genfinalvid():
         os.remove('finalgen_video.mp4')
     except:
         print("Failed to remove final.mp4 and/or finalgen_video.mp4")
-    filea = "file 'vidgen/question.avi'\n"
+    filea = ""#"file 'vidgen/question.avi'\n"
     fdata = open("list.txt", "w+")
     for filename in os.listdir("vidgen\\"):
         if 'question.avi' in filename:
             continue
         filea = filea + "file 'vidgen/" + filename + "'\n"
-        filea = filea + "file 'GFX/123.avi'\n"
+        #filea = filea + "file 'GFX/123.avi'\n"
     #print(filea)
     fdata.write(filea)
     fdata.close()
@@ -48,7 +48,7 @@ def genquestionimage(url):
     WINDOW_SIZE = "1280,600"
     options1 = Options()
     options1.add_argument("--window-size=%s" % WINDOW_SIZE)
-    driver = webdriver.Opera(options=options1)
+    driver = webdriver.Chrome(options=options1)
     driver.get(url)
     driver.save_screenshot("temp\\question.png")
     driver.quit()
