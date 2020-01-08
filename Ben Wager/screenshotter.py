@@ -5,6 +5,7 @@ from time import sleep
 from html import unescape
 
 browser = webdriver.Chrome("../Utilities/chromedriver.exe")
+browser.maximize_window()
 
 def makeFolder(id):
 	try:

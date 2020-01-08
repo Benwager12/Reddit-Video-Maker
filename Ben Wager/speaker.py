@@ -1,22 +1,29 @@
 import json
 from subprocess import call as run
 from os import path, makedirs
+import string
 
 def speak(words, directory_fileName=None):
+	printable = set(string.printable)
+	wordsNew = ''.join(filter(lambda x: x in printable, words))
+	print(wordsNew)
+
 	try:
 		makedirs("Voices/"+directory_fileName[0]+"/")
 	except FileExistsError:
 		pass
-	arr = ["../Utilities/speak", "-n", "Daniel", "-t", words]
+	#print(words)
+	arr = ["../Utilities/speak", "-n", "Daniel", "-t", wordsNew.replace("\"", "'")]
 	if not directory_fileName is None:
 		arr.append("-w")
 		arr.append("Voices/"+directory_fileName[0]+"/"+directory_fileName[1]+".wav")
+	print(arr)
 	run(arr)
 
 def saveSpeak(words, directory_fileName=None):
-	print("Started voice output... ", end="")
+	#print("Started voice output... ", end="")
 	speak(words, directory_fileName)
-	print("Ended voice output")
+	#print("Ended voice output")
 
 question = "0"
 while not path.exists("Outputs/"+question+".json"):
@@ -33,8 +40,8 @@ comments = file["comments"]
 
 # author points · created ago
 # title
-print(f"{questionAuthor}  {questionScore} · {questionCreated} ago")
-print(questionTitle)
+#print(f"{questionAuthor}  {questionScore} · {questionCreated} ago")
+#print(questionTitle)
 saveSpeak(questionTitle, [questionId,"/title-"+questionId])
 print("\n")
 
