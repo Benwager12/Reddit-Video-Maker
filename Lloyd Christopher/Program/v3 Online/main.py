@@ -13,7 +13,7 @@
 #TODO:
 #Upload automatically after qc (quality control)/manual check Not possible I think
 
-import requests, json, os, sys, shutil
+import os, sys, requests, json
 from html import escape
 from random import randint
 from time import time, sleep
@@ -21,9 +21,7 @@ from selenium import webdriver
 from subprocess import Popen as process
 import vidgen
 total_time = time()
-start_time = time()
 from selenium.webdriver.opera.options import Options
-
 answer = input('-----LunarHunter 2019-----\n-----Reddit Video Maker-----\n\nThis program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
                'Notes:\n' +      
                'Please delete all files in temp and vidgen before running this program! I will add this feature soon but not currently a priority.\n' +
@@ -33,6 +31,7 @@ if not answer or answer[0].lower() != 'y':
     print('You did not indicate approval!')
     sleep(2)
     exit(1)
+start_time = time()
 
 print("Removing all files from previous generation...")
 
@@ -42,8 +41,7 @@ try:
   os.remove('voice.wav')
 except:
   print("Error removing files/folders from main dir. Resuming")
-  
-WINDOW_SIZE = "1920,1080"
+
 options1 = Options()
 
 #You can uncomment these param if you replace the webdriver with chrome instead of opera
@@ -52,7 +50,7 @@ options1 = Options()
 #options1.add_argument("--test-type")
 #options1.add_argument('--headless')
 #options1.add_argument('--no-sandbox')
-options1.add_argument("--window-size=%s" % WINDOW_SIZE)
+options1.add_argument("--window-size=%s" % "1920,1080") # CHANGE RESOLUTION HERE
 
 def getscore(score):
   if score > 1000:
@@ -72,7 +70,6 @@ randcomquestion = []
 selectedurl = ""
 link = "https://www.reddit.com/r/askreddit.json"
 
-
 if depthlimit <=0 or selectedurl != "" or link == "":
   print("A variable is invaild - ERROR")
   quit()
@@ -82,12 +79,9 @@ print("Opening/creating files important to program...  - INFO")
 fdata = open("script.txt","w+")
 fdata2 = open("scripttts.txt","w+")
 
-
-
 #Load questions
 
-req = requests.get(link, headers={"User-agent":"rb0.1"}).text #gets body from link
-data = json.loads(req)["data"]["children"]
+data = json.loads(requests.get(link, headers={"User-agent":"rb0.1"}).text)["data"]["children"] #gets body from link
 print("Building randcom array...\n")
 for question in data:
     question = question["data"]
@@ -102,14 +96,14 @@ print("Selecting Random URL from randcom... - INFO\n")
 genint = randint(0,len(randcom)-1)
 selectedurl = str(randcom[genint]) + ".json"
 
-exclusions = open("exclusions.txt", "a")
-if str(randcom[genint]) in exclusions.read():
-    print("BREAK! Link that is selected is in the exclusion list.")
-    sleep(2)
-    exit(1)
+#exclusions = open("exclusions.txt", "a")
+#if str(randcom[genint]) in exclusions.read():
+#    print("BREAK! Link that is selected is in the exclusion list.")
+#    sleep(2)
+#    exit(1)
 
-exclusions.write(str(randcom[genint]) + "\n")
-exclusions.close()
+#exclusions.write(str(randcom[genint]) + "\n")
+#exclusions.close()
 #print(selectedurl)
 print("Generating question image...")
 vidgen.genquestionimage(str(randcom[genint]))
@@ -128,9 +122,7 @@ print("Delcaring and setting important vars\n")
 #You have to get the question manually though!
 #selectedurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_whats_a_thing_that_can_be_scary/.json"
 
-req1 = requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text
-
-data = json.loads(req1)[1]["data"]["children"]
+data = json.loads(requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text)[1]["data"]["children"] #Loads answers
 
 print("Building answer data file...\n")
 i = 0
@@ -160,7 +152,6 @@ print("Closing script files...\n")
 fdata.close()
 fdata2.close()
 
-
 print("Script Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
@@ -172,8 +163,7 @@ splitscript = open("script.txt").read()
 
 driver = webdriver.Opera(options=options1)
 
-command = ["balcon", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"]
-process(command)
+process(["balcon", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"])
 
 try:
   screenshotnumber = 0
@@ -197,8 +187,7 @@ try:
     ttstext = ttstext.replace("\\", "")
     #ttstext = ttstext.replace("\n", "")
     ttstext = ttstext.replace("\\\\\"", "")
-    command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"]
-    process(command)
+    process(["balcon", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"])
     
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
@@ -232,7 +221,7 @@ print("Starting ffmpeg combine...")
 
 start_time = time()
 
-vidgen.genmp4()
+vidgen.combinesoundandimage()
 
 print("FFMPEG combine finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))

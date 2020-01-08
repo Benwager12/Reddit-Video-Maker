@@ -1,12 +1,12 @@
 ﻿#-----LunarHunter 2019-----#
 #-----     Lloyd      -----#
 #HOLY the genfinalvid took so long. AS YOU CAN SEE
-import os, subprocess
+import os
 from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.opera.options import Options
 from time import sleep
-def genmp4():
+def combinesoundandimage():
     counta = 0
     os.system('ffmpeg -i temp\\question1.png -i temp\\question.wav -af "apad=pad_dur=1" -b 30000 -vb 20M -r 11 -vf "scale=1920:-1" vidgen\\question.avi > logs\\outputmp4.txt 2> logs\\errmp4.txt')
     while counta < 30:
@@ -14,7 +14,7 @@ def genmp4():
         os.system('ffmpeg -i temp\\' + str(counta) + '.png -i temp\\' + str(counta) + '.wav -af "apad=pad_dur=1" -b 30000 -vb 20M -r 11 -vf "scale=1920:-1" vidgen\\' + str(counta) + '.avi > logs\\outputmp4.txt 2> logs\\errmp4.txt')
         counta = counta + 1
 
-def genavifile(locallocation):
+def videotoavi(locallocation):
     os.system('ffmpeg -i ' + locallocation + ' -b 30000 -vb 20M -r 11 -vf "scale=1920:-1" generatedavi.avi > logs\\outputmp4.txt 2> logs\\errmp4.txt')
 
 def genfinalvid():
@@ -45,9 +45,8 @@ def genfinalvid():
     #os.system('mencoder final.mp4 -o finalgen_video.mp4 -ovc copy -oac copy -audiofile SFX\\1.mp4')
     #os.system('ffmpeg -i "concat:1.flv|2.flv" -codec copy output.mkv > output.txt 2> err.txt')
 def genquestionimage(url):
-    WINDOW_SIZE = "1280,600"
     options1 = Options()
-    options1.add_argument("--window-size=%s" % WINDOW_SIZE)
+    options1.add_argument("--window-size=%s" % "1280,600") # RESOLUTION HERE
     driver = webdriver.Opera(options=options1)
     driver.get(url)
     driver.save_screenshot("temp\\question.png")
