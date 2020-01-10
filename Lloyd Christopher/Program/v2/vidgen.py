@@ -48,7 +48,7 @@ def genquestionimage(url):
     WINDOW_SIZE = "1280,600"
     options1 = Options()
     options1.add_argument("--window-size=%s" % WINDOW_SIZE)
-    driver = webdriver.Chrome(options=options1)
+    driver = webdriver.Chrome("/../../../Utilities/operadriver", options=options1)
     driver.get(url)
     driver.save_screenshot("temp\\question.png")
     driver.quit()
