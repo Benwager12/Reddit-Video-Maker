@@ -173,7 +173,7 @@ splitscript = open("script.txt").read()
 
 driver = webdriver.Chrome(options=options1)
 
-command = ["balcon", "-n", "David", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"]
+command = ["/../../../Utilities/speak", "-n", "David", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"]
 process(command)
 
 try:
@@ -198,7 +198,7 @@ try:
     ttstext = ttstext.replace("\\", "")
     #ttstext = ttstext.replace("\n", "")
     ttstext = ttstext.replace("\\\\\"", "")
-    command = ["balcon", "-n", "David", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"]
+    command = ["/../../../Utilities/speak", "-n", "David", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"]
     process(command)
     
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
