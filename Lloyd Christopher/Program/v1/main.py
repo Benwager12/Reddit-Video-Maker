@@ -139,7 +139,7 @@ ttstext = ttstext.replace("\"", "")
 ttstext = ttstext.replace("\\", "")
 #ttstext = ttstext.replace("\n", "")
 ttstext = ttstext.replace("\\\\\"", "")
-command = ["balcon", "-n", "Daniel", "-t", ttstext, "-w", "voice.wav"]
+command = ["/../../../Utilities/speak", "-n", "Daniel", "-t", ttstext, "-w", "voice.wav"]
 process(command)
 
 f.close()
@@ -154,7 +154,7 @@ parts = ["author","score","comment"]
 authorscorecomments = []
 splitscript = open("script.txt").read()
 
-driver = webdriver.Opera(options=options1)
+driver = webdriver.Opera("/../../../Utilities/operadriver", options=options1)
 
 try:
   screenshotnumber = 0
