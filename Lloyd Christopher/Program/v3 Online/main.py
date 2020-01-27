@@ -2,7 +2,7 @@
 #-----LunarHunter-----#
 #This script is under the The Unlicense license!
 
-#Ver 2.0
+#Ver 3.0
 #This version is ready to use and has some improvements over the last ver.
 
 #This version could support ffmpeg if I implement the speech gen into the screenshot
@@ -161,9 +161,9 @@ parts = ["author","score","comment"]
 authorscorecomments = []
 splitscript = open("script.txt").read()
 
-driver = webdriver.Opera("/../../../Utilities/operadriver", options=options1)
+driver = webdriver.Opera(options=options1)
 
-process(["/../../../Utilities/speak", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"])
+process(["balcon", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"])
 
 try:
   screenshotnumber = 0
@@ -187,7 +187,7 @@ try:
     ttstext = ttstext.replace("\\", "")
     #ttstext = ttstext.replace("\n", "")
     ttstext = ttstext.replace("\\\\\"", "")
-    process(["/../../../Utilities/speak", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"])
+    process(["balcon", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"])
     
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
