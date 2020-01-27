@@ -1,6 +1,9 @@
 # Reddit Video Maker
 This is a project that me and Lloyd have been working on in order to use ffmpeg to create videos that can read from Reddit. This project is a work in progress and can be unstable if there is no internet, access to Reddit has been blocked or an antivirus software blocked writing to a directory.
 
+## Information
+Certain executables included in this directory can trigger anti-ransomware programs due to them editing or adding files in a protected folder, if no files are generated, please disable your anti-virus and try again.
+
 ## Instructions
 The instructions are particularly easy but different for either person's program that you would like to start.
 * Ben's: Use the "scraper.py" to install questions from the recent Reddit posts, then pick one (or many) that you would like to use and press open "offline-video.py" to create this video.
