@@ -188,6 +188,7 @@ try:
     ttstext = ttstext.replace("\\", "")
     #ttstext = ttstext.replace("\n", "")
     ttstext = ttstext.replace("\\\\\"", "")
+    ttstext = ttstext.replace('"', "")
     process(["balcon", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"])
     
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
