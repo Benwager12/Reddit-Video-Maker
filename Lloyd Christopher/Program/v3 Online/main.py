@@ -62,39 +62,40 @@ print("Declaring, setting and checking important vars\n")
 #print(os.path.dirname(sys.argv[0]) + "\\wkhtmltoimage.exe")
 
 #This is how far the script goes into comments before stopping
-depthlimit = 25
+commentdepthlimit = 25
 
-randcom = []
-randcomquestion = []
-selectedurl = ""
+randquestion = []
+randcomment = []
+selectedquestionurl = ""
+
 link = "https://www.reddit.com/r/askreddit.json"
 
-if depthlimit <=0 or selectedurl != "" or link == "":
+if commentdepthlimit <=0 or selectedquestionurl != "" or link == "":
   print("A variable is invaild - ERROR")
   quit()
 print("Done checking vars\n")
 
 print("Opening/creating files important to program...  - INFO")
-fdata = open("script.txt","w+")
-fdata2 = open("scripttts.txt","w+")
+script = open("script.txt","w+")
+scripttts = open("scripttts.txt","w+")
 
 #Load questions
 print("Loading questions... \n")
 
 data = json.loads(requests.get(link, headers={"User-agent":"rb0.1"}).text)["data"]["children"] #gets body from link
-print("Building randcom array...\n")
+print("Building randquestion array...\n")
 for question in data:
     question = question["data"]
     #print("u/"+question["author"])
-    randcom.append("https://www.reddit.com" + question["permalink"]) #Get permalink, so we can access the json file
-    randcomquestion.append(question["title"])
+    randquestion.append("https://www.reddit.com" + question["permalink"]) #Get permalink, so we can access the json file
+    randcomment.append(question["title"])
     #print(question["title"] + "\n")
 
-print(str(len(randcom)-1) + " total url's found in randcom array! - INFO\n")
-print("Selecting Random URL from randcom... - INFO\n")
+print(str(len(randquestion)-1) + " total url's found in randquestion array! - INFO\n")
+print("Selecting Random URL from randquestion... - INFO\n")
 
-genint = randint(0,len(randcom)-1)
-selectedurl = str(randcom[genint]) + ".json"
+genint = randint(0,len(randquestion)-1)
+selectedquestionurl = str(randquestion[genint]) + ".json"
 
 #exclusions = open("exclusions.txt", "a")
 #if str(randcom[genint]) in exclusions.read():
@@ -104,30 +105,30 @@ selectedurl = str(randcom[genint]) + ".json"
 
 #exclusions.write(str(randcom[genint]) + "\n")
 #exclusions.close()
-#print(selectedurl)
+#print(selectedquestionurl)
 print("Generating question image...")
-vidgen.genquestionimage(str(randcom[genint]))
+vidgen.genquestionimage(str(randquestion[genint]))
 print("\nFound random URL. Getting json from said url.\n")
 
-fdata2.write(randcomquestion[genint]+ "\n\n")
+scripttts.write(randcomment[genint]+ "\n\n")
 
 #Stage 2
 print("\n---Starting Stage 2---\n")
 
 print("Delcaring and setting important vars\n")
 #Load questions
-#print(selectedurl)
+#print(selectedquestionurl)
 
 #USE THIS TO OVERRIDE THE ANSWERS!
 #You have to get the question manually though!
-#selectedurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_whats_a_thing_that_can_be_scary/.json"
+#selectedquestionurl = "https://www.reddit.com/r/AskReddit/comments/eaymhi/men_of_reddit_whats_a_thing_that_can_be_scary/.json"
 
-data = json.loads(requests.get(selectedurl, headers={"User-agent":"rb0.1"}).text)[1]["data"]["children"] #Loads answers
+data = json.loads(requests.get(selectedquestionurl, headers={"User-agent":"rb0.1"}).text)[1]["data"]["children"] #Loads answers
 
 print("Building answer data file...\n")
 i = 0
 for answer in data:
-    if i >= depthlimit:
+    if i >= commentdepthlimit:
       print("Depth Limit Reached: " + str(i) +"\n")
       break
     answer = answer["data"]
@@ -136,8 +137,8 @@ for answer in data:
     if answer["author"] == "AutoModerator": continue
     if answer["author"].lower() == "deleted": continue
     try:
-      fdata.write("u/"+answer["author"] + "||" + getscore(answer["score"]) + " points||")
-      fdata.write( answer["body"] + "¬¬¬¬¬")
+      script.write("u/"+answer["author"] + "||" + getscore(answer["score"]) + " points||")
+      script.write( answer["body"] + "¬¬¬¬¬")
       #fdata2.write(answer["body"] + ".\n\n")
     except:
       print("Error Occurred while writing in script.txt, skipping body..\n")
@@ -149,8 +150,8 @@ for answer in data:
 
 
 print("Closing script files...\n")
-fdata.close()
-fdata2.close()
+script.close()
+scripttts.close()
 
 print("Script Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
