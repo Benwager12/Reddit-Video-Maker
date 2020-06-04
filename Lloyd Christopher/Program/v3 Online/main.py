@@ -21,7 +21,7 @@ from selenium import webdriver
 from subprocess import Popen as process
 import vidgen
 total_time = time()
-from selenium.webdriver.opera.options import Options
+from selenium.webdriver.chrome.options import Options
 answer = input('-----LunarHunter 2019-----\n-----Reddit Video Maker-----\n\nThis program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
                'Notes:\n' +      
                'Please delete all files in temp and vidgen before running this program! I will add this feature soon but not currently a priority.\n' +
@@ -44,12 +44,11 @@ except:
 
 options1 = Options()
 
-#You can uncomment these param if you replace the webdriver with chrome instead of opera
 
-#options1.add_argument('--ignore-certificate-errors')
-#options1.add_argument("--test-type")
-#options1.add_argument('--headless')
-#options1.add_argument('--no-sandbox')
+options1.add_argument('--ignore-certificate-errors')
+options1.add_argument("--test-type")
+options1.add_argument('--headless')
+options1.add_argument('--no-sandbox')
 options1.add_argument("--window-size=%s" % "1920,1080") # CHANGE RESOLUTION HERE
 
 def getscore(score):
@@ -80,6 +79,7 @@ fdata = open("script.txt","w+")
 fdata2 = open("scripttts.txt","w+")
 
 #Load questions
+print("Loading questions... \n")
 
 data = json.loads(requests.get(link, headers={"User-agent":"rb0.1"}).text)["data"]["children"] #gets body from link
 print("Building randcom array...\n")
@@ -161,7 +161,7 @@ parts = ["author","score","comment"]
 authorscorecomments = []
 splitscript = open("script.txt").read()
 
-driver = webdriver.Opera(options=options1)
+driver = webdriver.Chrome(options=options1)
 
 process(["balcon", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"])
 
