@@ -4,6 +4,7 @@
 
 #Ver 3.0
 #This version is ready to use and has some improvements over the last ver.
+#But requires some tweaks to improve the "quality". i.e. image resizer on the images generated
 
 #This version could support ffmpeg if I implement the speech gen into the screenshot
 #loop.
@@ -12,6 +13,7 @@
 
 #TODO:
 #Upload automatically after qc (quality control)/manual check Not possible I think
+#Image Resizer (doing)
 
 import os, sys, requests, json
 from html import escape
@@ -22,6 +24,7 @@ from subprocess import Popen as process
 import vidgen
 total_time = time()
 from selenium.webdriver.chrome.options import Options
+
 answer = input('-----LunarHunter 2019-----\n-----Reddit Video Maker-----\n\nThis program is under the Unlicense license! I would suggest running in a VM to avoid any problems that prevents termination.\n\n' +
                'Notes:\n' +      
                'Please delete all files in temp and vidgen before running this program! I will add this feature soon but not currently a priority.\n' +
@@ -36,6 +39,7 @@ start_time = time()
 print("Removing all files from previous generation...")
 
 try:
+    #tries to prevent code down the line exiting with a "File already there, cannot override" exception
   os.remove('script.txt')
   os.remove('scripttts.txt')
   os.remove('voice.wav')
@@ -44,13 +48,14 @@ except:
 
 options1 = Options()
 
-
+#These options make the chromium driver act "silently"
 options1.add_argument('--ignore-certificate-errors')
 options1.add_argument("--test-type")
 options1.add_argument('--headless')
 options1.add_argument('--no-sandbox')
 options1.add_argument("--window-size=%s" % "1920,1080") # CHANGE RESOLUTION HERE
 
+#this def is for code later on, this is for generating the comment score.
 def getscore(score):
   if score > 1000:
     score /= 1000
@@ -68,6 +73,7 @@ randquestion = []
 randcomment = []
 selectedquestionurl = ""
 
+#Here is the main sub reddit link that is used, change this if you want results from different sub reddits
 link = "https://www.reddit.com/r/askreddit.json"
 
 if commentdepthlimit <=0 or selectedquestionurl != "" or link == "":
@@ -75,6 +81,7 @@ if commentdepthlimit <=0 or selectedquestionurl != "" or link == "":
   quit()
 print("Done checking vars\n")
 
+#Prepares script files for writing.
 print("Opening/creating files important to program...  - INFO")
 script = open("script.txt","w+")
 scripttts = open("scripttts.txt","w+")
@@ -97,6 +104,9 @@ print("Selecting Random URL from randquestion... - INFO\n")
 genint = randint(0,len(randquestion)-1)
 selectedquestionurl = str(randquestion[genint]) + ".json"
 
+#This is the exclusion code, this will disallow any links that have been generated before. However, it doesn't work and by the time
+#it is run, the last link would have gone already from hot. Re-enable if you desire, but it requires repairs in order to work.
+
 #exclusions = open("exclusions.txt", "a")
 #if str(randcom[genint]) in exclusions.read():
 #    print("BREAK! Link that is selected is in the exclusion list.")
@@ -112,7 +122,7 @@ print("\nFound random URL. Getting json from said url.\n")
 
 scripttts.write(randcomment[genint]+ "\n\n")
 
-#Stage 2
+#Stage 2 is where the comments are loaded in and the generation takes place
 print("\n---Starting Stage 2---\n")
 
 print("Delcaring and setting important vars\n")
@@ -156,14 +166,17 @@ scripttts.close()
 print("Script Generation finished at:")
 print("--- %s seconds ---" % round(time() - start_time, 2))
 
+#Sets up arrays ready for generation use
 start_time = time()
 partnumber = 0
 parts = ["author","score","comment"]
 authorscorecomments = []
 splitscript = open("script.txt").read()
 
+#defines webdriver
 driver = webdriver.Chrome(options=options1)
 
+#Run balcon to generate the tts voice
 process(["balcon", "-n", "Daniel", "-t", open("scripttts.txt", "r").read(), "-w", "temp\question.wav"])
 
 try:
@@ -190,28 +203,35 @@ try:
     ttstext = ttstext.replace("\\\\\"", "")
     ttstext = ttstext.replace('"', "")
     process(["balcon", "-n", "Daniel", "-t", ttstext, "-w", "temp\\"+str(screenshotnumber)+".wav"])
-    
+
+    #Removes chars that break the generation or cause unexpected generation problems
     authorscorecomments[2] = authorscorecomments[2].replace("\"", "\\\"")
     authorscorecomments[2] = authorscorecomments[2].replace("\\", "\\\\")
     authorscorecomments[2] = authorscorecomments[2].replace("\n", "\\n")
     authorscorecomments[2] = authorscorecomments[2].replace("\\\\\"", "\\\"")
-    
+
+    #Loads the index file.
     driver.get(os.path.dirname(sys.argv[0]) + "\\index.html")
+    #Replaces the placeholder text with the author, comment and the score.
     script = "author=\"" + authorscorecomments[0] + "\";score=\"" + authorscorecomments[1] + "\";comment=\"" + authorscorecomments[2] +"\";"
     print(script)
     driver.execute_script(script)
+    #Sleeps the script just in case the driver is taking it's time to load in the comment.
     sleep(0.4)
+    #Saves a screenshot to the temp dir
     driver.save_screenshot("temp\\"+str(screenshotnumber)+".png")
 
     print("Driver Screenshot completed: " + str(screenshotnumber))
     
     screenshotnumber = screenshotnumber + 1
+    #Reset for the next comment
     authorscorecomments = []
     
     #to ensure that the system running the script doesn't get overloaded with the balcom program.
     #sleep(1)
     
 except Exception as e:
+    #The reason why this is probably normal is because it generates the image of the comment 30 times while the depth limit is 25 (default), so it should error out once it enters 26
   print("Exception Occurred, probably normal. Continuing: " + str(e))
 
 driver.quit()
